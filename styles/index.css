@@ -1,0 +1,72 @@
+/* Глобально */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btn-reset {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+
+
+/* Инструкция */
+.instruction {
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(47, 47, 47, 0.9);
+  color: black;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.instruction-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+
+.instruction-title {
+  margin-right: 10px;
+}
+
+.instruction-close {
+  width: 30px;
+  height: 30px;
+}
+
+
+
+.hidden {
+  display: none;
+}
