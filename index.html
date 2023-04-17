@@ -8,24 +8,38 @@
   <link rel="stylesheet" href="styles/index.css">
   <title>Гитара-Герой</title>
 </head>
-<body>
-  <head id="header">
-    <h1>Гитара-Герой</h1>
-  </head>
-  <main id="main">
-    <section id="game_section" class="game_section">
-      <div class="game_body"></div>
-    </section>
-    <section class="instruction flex">
-      <div class="instruction-header">
-        <h2 class="instruction-title">Инструкция</h2>
-        <button class="btn-reset instruction-close"><img class="instruction-close-img" src="/img/cross-svgrepo-com.svg" alt="Закрыть"></button>
+<body class="flex">
+  <h1 class="header-title flex">Гитара-Герой</h1>
+  <div class="start-info">Нажмите на Start для начала игры.</div>
+  <div class="restart-info hidden">Нажмите на Retart, чтобы начать заного.</div>
+  <div class="score_section hidden"></div>
+  <div class="music_section flex hidden">
+    <p class="timer-place"></p>
+    <button class="btn-reset music-btn"></button>
+  </div>
+  <div class="game_body flex">
+    <div class="start_section flex">
+      <button class="btn-reset start-btn">Start</button>
+    </div>
+    <div class="restart_section flex hidden">
+      <p class="final-score"></p>
+      <button class="btn-reset restart-btn">Restart</button>
+    </div>
+    <div class="game-place flex hidden">
+      <div class="game-collumns flex">
+        <div class="game-row flex">
+          <div class="game-btn flex">A</div>
+          <div class="game-btn flex">S</div>
+          <div class="game-btn flex">D</div> 
+          <div class="game-btn flex">F</div>
+        </div>           
+        <div class="game-collum flex"></div>
+        <div class="game-collum flex"></div>
+        <div class="game-collum flex"></div>
+        <div class="game-collum flex"></div>   
       </div>
-      <div class="instruction-body">
-        <p class="instruction-text">Ну давай, заплачь.</p>
-      </div>
-    </section>
-  </main>
-  <footer id="footer"></footer>
+    </div>
+  </div>
+  <script src="/index.js"></script>
 </body>
 </html>
