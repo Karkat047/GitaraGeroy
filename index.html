@@ -11,17 +11,21 @@
 <body class="flex">
   <h1 class="header-title flex">Гитара-Герой</h1>
   <div class="start-info">Нажмите на Start для начала игры.</div>
-  <div class="restart-info hidden">Нажмите на Retart, чтобы начать заного.</div>
-  <div class="score_section hidden"></div>
-  <div class="music_section flex hidden">
+  <div class="restart-info hidden">Нажмите на Restart, чтобы начать заноГо.</div>
+  <div class="score-section hidden">
+    <div class="score-info"></div>
+    <div class="score-changes"></div>
+  </div>
+  <div class="music-section flex hidden">
     <p class="timer-place"></p>
     <button class="btn-reset music-btn"></button>
+    <button class="btn-reset stop-btn">Прекратить</button>
   </div>
   <div class="game_body flex">
-    <div class="start_section flex">
+    <div class="start-section flex">
       <button class="btn-reset start-btn">Start</button>
     </div>
-    <div class="restart_section flex hidden">
+    <div class="restart-section flex hidden">
       <p class="final-score"></p>
       <button class="btn-reset restart-btn">Restart</button>
     </div>
@@ -40,6 +44,7 @@
       </div>
     </div>
   </div>
+  <div class="onime-info"></div>
   <script src="/index.js"></script>
 </body>
 </html>
