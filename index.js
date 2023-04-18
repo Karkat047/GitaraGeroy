@@ -14,7 +14,7 @@ let scoreChangeInfo = '';
 const scoreChanges = document.querySelector('.score-changes');
 
 let speedLevelInfo = 1;
-let speedLevel = 11;
+let speedLevel = 5;
 const levelPlus = document.querySelector('.level-plus');
 const levelMinus = document.querySelector('.level-minus');
 const levelInfo = document.querySelector('.level-info');
@@ -94,9 +94,9 @@ function createNotaGovna() {
 			}, 200); 
 		}
 
-		position += 3;
+		position += speedLevel;
 	}
-	let moving = setInterval(() => moveNote(note, outLines[column]), speedLevel);
+	let moving = setInterval(() => moveNote(note, outLines[column]), 17);
 	moveNote(note, outLines[column]);
 }
 
@@ -269,7 +269,7 @@ levelPlus.addEventListener('click', () => {
 	if (speedLevelInfo < 3) {
 		speedLevelInfo += 1;
 		setSpeedLevelInfo(speedLevelInfo);
-		speedLevel -= 5;
+		speedLevel += 5;
 	}
 })
 
@@ -277,7 +277,7 @@ levelMinus.addEventListener('click', () => {
 	if (speedLevelInfo > 1) {
 		speedLevelInfo -= 1;
 		setSpeedLevelInfo(speedLevelInfo);
-		speedLevel += 5;
+		speedLevel -= 5;
 	}
 })
 
