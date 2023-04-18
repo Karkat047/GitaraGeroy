@@ -1,7 +1,7 @@
 const scoreInfo = document.querySelector('.score-info');
 let score = 0;
-const scorePopal = +47;
-const scoreNePopal = -1000;
+const scorePopal = +20;
+const scoreNePopal = -30;
 const scoreOutline = -10;
 const setScore = (value) => scoreInfo.textContent = `Ну давай, заплачь (凸ಠ益ಠ)凸 ${value}`;
 setScore(score);
@@ -13,14 +13,26 @@ setFinalScore(score);
 let scoreChangeInfo = '';
 const scoreChanges = document.querySelector('.score-changes');
 
-let sozdavatNote;
+let speedLevelInfo = 1;
+let speedLevel = 11;
+const levelPlus = document.querySelector('.level-plus');
+const levelMinus = document.querySelector('.level-minus');
+const levelInfo = document.querySelector('.level-info');
+const setSpeedLevelInfo = (value) => levelInfo.textContent = `${value}`;
+setSpeedLevelInfo(speedLevelInfo);
 
-const onimeSection = document.querySelector('body');
+let multiplier = 1;
+const multiplierInfo = document.querySelector('.combo-multiplier');
+const setMultiplierInfo = (value) => multiplierInfo.textContent = `Комбо: х${value}`;
+setMultiplierInfo(multiplier);
+
+const onimeSection = document.querySelector('.bg-place');
 const comboSection = document.querySelector('.onime-info');
-comboSection.textContent = `Чё, пацаны, Онимэ?`
 let combo = 20;
 const setComboScore = (value) => comboSection.textContent = `До онимэ тянки: ${value}`;
 setComboScore(combo);
+
+let sozdavatNote;
 
 const noteLines = document.getElementsByClassName('game-collum');
 const outLines =  document.getElementsByClassName("game-btn");
@@ -65,10 +77,12 @@ function createNotaGovna() {
 					dataBaseNotes[column].splice(index, 1); 
 				}
 				combo = 20;
-				score += scoreOutline;
+				score <= 10 ? score = 0 : score += scoreOutline;
+				multiplier = 1;
 				setScore(score);
 				setFinalScore(score);
 				setComboScore(combo);
+				setMultiplierInfo(multiplier);
 				currentNote.remove();
 				scoreChanges.textContent = `${scoreOutline}`;
 				scoreChanges.classList.add('red');
@@ -80,9 +94,9 @@ function createNotaGovna() {
 			}, 200); 
 		}
 
-		position += 1;
+		position += 3;
 	}
-	let moving = setInterval(() => moveNote(note, outLines[column]));
+	let moving = setInterval(() => moveNote(note, outLines[column]), speedLevel);
 	moveNote(note, outLines[column]);
 }
 
@@ -90,28 +104,28 @@ function createNotaGovna() {
 
 function knopki (e) {
 			
-	let popal = false;
+	let hit = false;
 	
 	const column = keysLines.hasOwnProperty(e.key) ? keysLines[e.key] : -1;
 	if (column !== -1) {
 		for (let i = 0; i < dataBaseNotes[column].length; i++) {
 			if (outLines[column].getBoundingClientRect().top <= dataBaseNotes[column][i].getBoundingClientRect().bottom
 			&& outLines[column].getBoundingClientRect().bottom >= dataBaseNotes[column][i].getBoundingClientRect().top  ) {
-				popal = true;
+				hit = true;
 				const elem = dataBaseNotes[column][i];
 				dataBaseNotes[column].splice(i, 1); 
 				elem.remove();
 			}
 		}
 	
-		if (popal) {
-			combo += -1;
-			score += scorePopal;
+		if (hit) {
+			combo -= 1;
+			score += scorePopal * multiplier;
 			setScore(score);
 			setFinalScore(score);
 			outLines[column].classList.add('game-btn-popal');
 			setComboScore(combo);
-			scoreChanges.textContent = `+${scorePopal}`;
+			scoreChanges.textContent = `+${scorePopal * multiplier}`;
 			scoreChanges.classList.add('green');
 			setTimeout(() => {
 				outLines[column].classList.remove('game-btn-popal');
@@ -121,12 +135,13 @@ function knopki (e) {
 
 		} else {
 			combo = 20;
-			score += scoreNePopal;
+			score <= 20 ? score = 0 : score += scoreNePopal;
+			multiplier = 1;
 			setScore(score);
 			setFinalScore(score);
+			setMultiplierInfo(multiplier);
 			outLines[column].classList.add('game-btn-ne-popal')
 			setComboScore(combo);
-			comboSection.textContent = `До онимэ тянки: ${combo}`;
 			scoreChanges.textContent = `${scoreNePopal}`;
 			scoreChanges.classList.add('red');
 			setTimeout(() => {
@@ -136,19 +151,19 @@ function knopki (e) {
 			}, 200);
 		}
 	}	
-	
-	comboSection.textContent = `До онимэ тянки: ${combo}`;
 
 	if (combo == 0) {
-		onimeSection.classList.add('combo-bg')
+		onime ();
 		comboSection.textContent = `ОНИМЭ!`;
 		combo = 20;
+		multiplier += 1;
+		setMultiplierInfo(multiplier);
 		setTimeout(() => {
 			outLines[column].classList.remove('game-btn-popal');
-			onimeSection.classList.remove('combo-bg');
 			comboSection.textContent = `До онимэ тянки: ${combo}`;
 		}, 200);
 	};
+
 };
 
 //GameStart
@@ -180,18 +195,6 @@ start.addEventListener('click', () => {
 
 	gameStart();
 	timerGovna();
-	comboSection.textContent = `До онимэ тянки: ${combo}`
-})
-
-restart.addEventListener('click', () => {
-	restartSection.classList.add('hidden');
-	restartInfo.classList.add('hidden')
-	gamePlace.classList.remove('hidden');
-	scoreSection.classList.remove('hidden');
-	musicSection.classList.remove('hidden');
-
-	gameStart();
-	timerGovna();
 	score = 0;
 	setScore(score)
 	combo = 20;
@@ -199,6 +202,7 @@ restart.addEventListener('click', () => {
 })
 
 //Timer
+
 const timerPlace = document.querySelector('.timer-place')
 let intervalTimera;
 
@@ -225,8 +229,9 @@ function timerGovna () {
 //Stop
 
 function stopGovna() {
-	restartSection.classList.remove('hidden');
-	restartInfo.classList.remove('hidden')
+	startSection.classList.remove('hidden');
+	startInfo.classList.remove('hidden')
+	finalScore.classList.remove('hidden')
 	gamePlace.classList.add('hidden');
 	scoreSection.classList.add('hidden');
 	musicSection.classList.add('hidden');
@@ -257,3 +262,30 @@ music.addEventListener('click', () => {
 			music.textContent = `Вкл. музыку`
 	}
 });
+
+//SpeedLevel
+
+levelPlus.addEventListener('click', () => {
+	if (speedLevelInfo < 3) {
+		speedLevelInfo += 1;
+		setSpeedLevelInfo(speedLevelInfo);
+		speedLevel -= 5;
+	}
+})
+
+levelMinus.addEventListener('click', () => {
+	if (speedLevelInfo > 1) {
+		speedLevelInfo -= 1;
+		setSpeedLevelInfo(speedLevelInfo);
+		speedLevel += 5;
+	}
+})
+
+// Anime
+
+function onime() {
+	onimeSection.classList.add('combo-bg')
+	setTimeout(() => {
+		onimeSection.classList.remove('combo-bg');
+	}, 1000);
+}
