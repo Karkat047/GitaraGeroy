@@ -35,7 +35,7 @@ setComboScore(combo);
 let sozdavatNote;
 
 const noteLines = document.getElementsByClassName('game-collum');
-const outLines =  document.getElementsByClassName("game-btn");
+const outLines = document.getElementsByClassName("game-btn");
 const keysLines = {
 	a: 0, A: 0, ф: 0, Ф: 0,
 	s: 1, S: 1, ы: 1, Ы: 1,
@@ -54,9 +54,8 @@ const dataBaseNotes = {
 
 function createNotaGovna() {
 	let budemVizivat = Math.ceil(Math.random() * 4);
-	if (budemVizivat != 2) {
-		return
-	}
+	if (budemVizivat != 2) return
+		
 	const column = Math.ceil(Math.random()*noteLines.length) - 1;
 	const note = document.createElement('div');
 	note.classList.add('note');
@@ -86,6 +85,7 @@ function createNotaGovna() {
 				currentNote.remove();
 				scoreChanges.textContent = `${scoreOutline}`;
 				scoreChanges.classList.add('red');
+				// zvukMimoPlay();
 				setTimeout(() => {
 					outLines[column].classList.remove('game-btn-popal');
 					scoreChanges.textContent = '';
@@ -102,15 +102,17 @@ function createNotaGovna() {
 
 //Buttons
 
-function knopki (e) {
+function knopki(e) {
 			
 	let hit = false;
 	
 	const column = keysLines.hasOwnProperty(e.key) ? keysLines[e.key] : -1;
 	if (column !== -1) {
 		for (let i = 0; i < dataBaseNotes[column].length; i++) {
-			if (outLines[column].getBoundingClientRect().top <= dataBaseNotes[column][i].getBoundingClientRect().bottom
-			&& outLines[column].getBoundingClientRect().bottom >= dataBaseNotes[column][i].getBoundingClientRect().top  ) {
+			if (
+				outLines[column].getBoundingClientRect().top <= dataBaseNotes[column][i].getBoundingClientRect().bottom
+				&& outLines[column].getBoundingClientRect().bottom >= dataBaseNotes[column][i].getBoundingClientRect().top
+			) {
 				hit = true;
 				const elem = dataBaseNotes[column][i];
 				dataBaseNotes[column].splice(i, 1); 
@@ -127,6 +129,7 @@ function knopki (e) {
 			setComboScore(combo);
 			scoreChanges.textContent = `+${scorePopal * multiplier}`;
 			scoreChanges.classList.add('green');
+			zvukPopalPlay();
 			setTimeout(() => {
 				outLines[column].classList.remove('game-btn-popal');
 				scoreChanges.textContent = '';
@@ -144,6 +147,7 @@ function knopki (e) {
 			setComboScore(combo);
 			scoreChanges.textContent = `${scoreNePopal}`;
 			scoreChanges.classList.add('red');
+			zvukNePopalPlay();
 			setTimeout(() => {
 				outLines[column].classList.remove('game-btn-ne-popal');
 				scoreChanges.textContent = '';
@@ -168,7 +172,7 @@ function knopki (e) {
 
 //GameStart
 
-function gameStart () {
+const gameStart = () => {
 
 	document.addEventListener('keydown', knopki);
 	sozdavatNote = setInterval(() => createNotaGovna(), 250);
@@ -177,13 +181,10 @@ function gameStart () {
 //Start/Restart
 
 const start = document.querySelector('.start-btn');
-const restart = document.querySelector('.restart-btn');
 const scoreSection = document.querySelector('.score-section');
 const gamePlace = document.querySelector('.game-place');
 const startSection = document.querySelector('.start-section');
 const startInfo = document.querySelector('.start-info');
-const restartInfo = document.querySelector('.restart-section');
-const restartSection = document.querySelector('.restart-info');
 const musicSection = document.querySelector('.music-section');
 
 start.addEventListener('click', () => {
@@ -215,7 +216,7 @@ function timerGovna () {
 
 		timerPlace.textContent = `Время: ${minute - 1}:${sec - 1}`;
 		--sec;
-		if (sec == 00) {
+		if (sec == 0) {
 			--minute;
 			sec = 60;
 
@@ -239,6 +240,8 @@ function stopGovna() {
 	document.removeEventListener('keydown', knopki);
 	clearInterval(sozdavatNote);
 	clearInterval(intervalTimera);
+	ost.load();
+	music.textContent = `Вкл. музыку`
 	document.querySelectorAll('.note').forEach(note => {
 		if (note != undefined && note.parentNode !=undefined) note.parentNode.innerHTML = '';
 		}
@@ -262,6 +265,21 @@ music.addEventListener('click', () => {
 			music.textContent = `Вкл. музыку`
 	}
 });
+
+const zvukPopalPlay = () => {
+	const zvukPopal = new Audio('./music/popal.mp3');
+	zvukPopal.play();
+}
+
+const zvukNePopalPlay = () => {
+	const zvukNePopal = new Audio('./music/nePopal.mp3');
+	zvukNePopal.play();
+}
+
+const zvukMimoPlay = () => {
+	const zvukMimo = new Audio('./music/mimo.mp3');
+	zvukMimo.play();
+}
 
 //SpeedLevel
 
@@ -287,5 +305,5 @@ function onime() {
 	onimeSection.classList.add('combo-bg')
 	setTimeout(() => {
 		onimeSection.classList.remove('combo-bg');
-	}, 1000);
+	}, 2000);
 }
