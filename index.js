@@ -85,7 +85,7 @@ function createNotaGovna() {
 				currentNote.remove();
 				scoreChanges.textContent = `${scoreOutline}`;
 				scoreChanges.classList.add('red');
-				// zvukMimoPlay();
+				zvukMimoPlay();
 				setTimeout(() => {
 					outLines[column].classList.remove('game-btn-popal');
 					scoreChanges.textContent = '';
