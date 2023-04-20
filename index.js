@@ -76,14 +76,14 @@ function createNotaGovna() {
 					dataBaseNotes[column].splice(index, 1); 
 				}
 				combo = 20;
-				score <= 10 ? score = 0 : score += scoreOutline;
+				score <= 10 ? score = 0 : score += scoreOutline * speedLevelInfo;
 				multiplier = 1;
 				setScore(score);
 				setFinalScore(score);
 				setComboScore(combo);
 				setMultiplierInfo(multiplier);
 				currentNote.remove();
-				scoreChanges.textContent = `${scoreOutline}`;
+				scoreChanges.textContent = `${scoreOutline * speedLevelInfo}`;
 				scoreChanges.classList.add('red');
 				zvukMimoPlay();
 				setTimeout(() => {
@@ -122,12 +122,12 @@ function knopki(e) {
 	
 		if (hit) {
 			combo -= 1;
-			score += scorePopal * multiplier;
+			score += scorePopal * multiplier * speedLevelInfo;
 			setScore(score);
 			setFinalScore(score);
 			outLines[column].classList.add('game-btn-popal');
 			setComboScore(combo);
-			scoreChanges.textContent = `+${scorePopal * multiplier}`;
+			scoreChanges.textContent = `+${scorePopal * multiplier * speedLevelInfo}`;
 			scoreChanges.classList.add('green');
 			zvukPopalPlay();
 			setTimeout(() => {
@@ -138,14 +138,14 @@ function knopki(e) {
 
 		} else {
 			combo = 20;
-			score <= 20 ? score = 0 : score += scoreNePopal;
+			score <= 20 ? score = 0 : score += scoreNePopal * speedLevelInfo;
 			multiplier = 1;
 			setScore(score);
 			setFinalScore(score);
 			setMultiplierInfo(multiplier);
 			outLines[column].classList.add('game-btn-ne-popal')
 			setComboScore(combo);
-			scoreChanges.textContent = `${scoreNePopal}`;
+			scoreChanges.textContent = `${scoreNePopal * speedLevelInfo}`;
 			scoreChanges.classList.add('red');
 			zvukNePopalPlay();
 			setTimeout(() => {
